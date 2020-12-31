@@ -51,3 +51,9 @@ function optionChanged(newSample){
 // Initialize dashboard on page load
 init();
 
+d3.json("././samples.json").then(function(data){
+    console.log(data.names)
+    console.log(data.samples)
+    console.log(data.metadata)
+});
+
