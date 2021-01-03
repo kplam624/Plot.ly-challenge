@@ -36,7 +36,6 @@ function init() {
 
     // Selecting the tags
     var panelBox = d3.select(".panel-primary")
-    var panelContent = panelBox.select(".panel-body")
 
     // Read json data
     d3.json("././samples.json").then(function(data){
@@ -57,11 +56,12 @@ function init() {
 
         Object.entries(filteredMeta).forEach(function([key,value]){
             Object.entries(value).forEach(function([key2,value2]){
-                console.log(key2)
-                console.log(value2)
-                panelContent.text(key2 + ":" + value2);
-                panelBox.append("div").attr(".panel-body");
+                // console.log(key2)
+                // console.log(value2)
+                var panel = panelBox.append("div").attr("id","sample-metadata").attr("class","panel-body");
+                panel.text(key2 + ":" + value2);
             });
+            panelBox.select(".panel-body").remove()
             // panelContent.text(value);
             // panelBox.append("div").attr(".panel-body");
         });     
