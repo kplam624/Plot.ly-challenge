@@ -1,8 +1,4 @@
-/* The following is an example on how you might structure your code.
-This is not the only way to complete this assignment.
-Feel free to disregard and create your own code */
-
-// Define a function that will create metadata for given sample
+// Fill the panel with metadata information
 function buildMetadata(sample) {
 
     // Read the json data
@@ -10,13 +6,17 @@ function buildMetadata(sample) {
 
         // Parse and filter the data to get the sample's metadata
         var meta = data.metadata;
-        var filteredMeta = meta.filter(subject => subject.id === sample);
+        var filteredMeta = meta.filter(subject => subject.id === parseInt(sample));
+        
         // Specify the location of the metadata and update it
-
-
+        Object.entries(filteredMeta).forEach(function([key,value]){
+            Object.entries(value).forEach(function([key2,value2]){
+                var panel = panelBox.append("div").attr("id","sample-metadata").attr("class","panel-body");
+                panel.text(key2 + ":" + value2);
+            });
+        });
     });
-}
-
+};
 // Define a function that will create charts for given sample
 function buildCharts(sample) {
 
@@ -35,7 +35,7 @@ function buildCharts(sample) {
 function init() {
 
     // Selecting the tags
-    var panelBox = d3.select(".panel-primary")
+    var panelBox = d3.select(".panel-primary");
 
     // Read json data
     d3.json("././samples.json").then(function(data){
@@ -52,22 +52,25 @@ function init() {
 
     // Use first sample to build metadata and initial plots
         var filteredMeta = meta.filter(subject => subject.id === 940);
-        console.log(filteredMeta)
 
         Object.entries(filteredMeta).forEach(function([key,value]){
             Object.entries(value).forEach(function([key2,value2]){
                 var panel = panelBox.append("div").attr("id","sample-metadata").attr("class","panel-body");
                 panel.text(key2 + ":" + value2);
             });
-            panelBox.select(".panel-body").remove()
+            panelBox.select(".panel-body").remove();
         });     
     });
 };
 
 function optionChanged(newSample){
 
+    var panelBox = d3.select(".panel-primary");
+    
     // Update metadata with newly selected sample
-
+    panelBox.selectAll(".panel-body").remove();
+    buildMetadata(newSample)
+    
     // Update charts with newly selected sample
 
 }
