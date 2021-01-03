@@ -56,14 +56,10 @@ function init() {
 
         Object.entries(filteredMeta).forEach(function([key,value]){
             Object.entries(value).forEach(function([key2,value2]){
-                // console.log(key2)
-                // console.log(value2)
                 var panel = panelBox.append("div").attr("id","sample-metadata").attr("class","panel-body");
                 panel.text(key2 + ":" + value2);
             });
             panelBox.select(".panel-body").remove()
-            // panelContent.text(value);
-            // panelBox.append("div").attr(".panel-body");
         });     
     });
 };
@@ -85,26 +81,6 @@ d3.json("././samples.json").then(function(data){
     console.log(data.metadata)
 
 });
-
-// Populate the dropdown menu with the names.
-// var dropdown = d3.select("#selDataset");
-
-// // Reads the json file
-// d3.json("././samples.json").then(function(data){
-//     // Calls the names on the json
-//     var name = data.names;
-
-//     // Pulls the names and uses them to populate the menu.
-//     Object.entries(name).forEach(function([key,value]){
-//         dropdown.append("option").text(value);
-//     });
-// });
-
-function unpack(rows, index) {
-    return rows.map(function(row) {
-      return row[index];
-    });
-  }
 
 // d3.json("././samples.json").then(function(data){
 //     var sample = data.samples;
