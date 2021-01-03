@@ -34,20 +34,37 @@ function buildCharts(sample) {
 // Define function that will run on page load
 function init() {
 
+    // Selecting the tags
+    var panelBox = d3.select(".panel-primary")
+    var panelContent = panelBox.select(".panel-body")
+
     // Read json data
     d3.json("././samples.json").then(function(data){
+    
         // Parse and filter data to get sample names
         var name = data.names;
-        
+        var meta = data.metadata;
+
         // Add dropdown option for each sample
         var dropdown = d3.select("#selDataset");
         Object.entries(name).forEach(function([key,value]){
             dropdown.append("option").text(value);
         });
+
     // Use first sample to build metadata and initial plots
-        var meta = data.metadata;
-        var filteredMeta = meta.filter(subject => subject.id === "940");
-        
+        var filteredMeta = meta.filter(subject => subject.id === 940);
+        console.log(filteredMeta)
+
+        Object.entries(filteredMeta).forEach(function([key,value]){
+            Object.entries(value).forEach(function([key2,value2]){
+                console.log(key2)
+                console.log(value2)
+                panelContent.text(key2 + ":" + value2);
+                panelBox.append("div").attr(".panel-body");
+            });
+            // panelContent.text(value);
+            // panelBox.append("div").attr(".panel-body");
+        });     
     });
 };
 
@@ -66,21 +83,22 @@ init();
 d3.json("././samples.json").then(function(data){
     // console.log(data.samples)
     console.log(data.metadata)
+
 });
 
 // Populate the dropdown menu with the names.
-var dropdown = d3.select("#selDataset");
+// var dropdown = d3.select("#selDataset");
 
-// Reads the json file
-d3.json("././samples.json").then(function(data){
-    // Calls the names on the json
-    var name = data.names;
+// // Reads the json file
+// d3.json("././samples.json").then(function(data){
+//     // Calls the names on the json
+//     var name = data.names;
 
-    // Pulls the names and uses them to populate the menu.
-    Object.entries(name).forEach(function([key,value]){
-        dropdown.append("option").text(value);
-    });
-});
+//     // Pulls the names and uses them to populate the menu.
+//     Object.entries(name).forEach(function([key,value]){
+//         dropdown.append("option").text(value);
+//     });
+// });
 
 function unpack(rows, index) {
     return rows.map(function(row) {
@@ -88,8 +106,8 @@ function unpack(rows, index) {
     });
   }
 
-d3.json("././samples.json").then(function(data){
-    var sample = data.samples;
-    var person = sample.filter(subject => subject.id === "940");
-    console.log(person)
-});
+// d3.json("././samples.json").then(function(data){
+//     var sample = data.samples;
+//     var person = sample.filter(subject => subject.id === "940");
+//     console.log(person)
+// });
