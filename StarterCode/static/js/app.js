@@ -7,10 +7,9 @@ function buildMetadata(sample) {
         // Parse and filter the data to get the sample's metadata
         var meta = data.metadata;
         var filteredMeta = meta.filter(subject => subject.id === parseInt(sample));
-        
-        // Specify the location of the metadata and update it
         Object.entries(filteredMeta).forEach(function([key,value]){
             Object.entries(value).forEach(function([key2,value2]){
+                // Specify the location of the metadata and update it
                 var panel = panelBox.append("div").attr("id","sample-metadata").attr("class","panel-body");
                 panel.text(key2 + ":" + value2);
             });
@@ -79,14 +78,20 @@ function optionChanged(newSample){
 init();
 
 // This shows the json files.
+// d3.json("././samples.json").then(function(data){
+//     console.log(data.samples)
+// });
+
 d3.json("././samples.json").then(function(data){
-    // console.log(data.samples)
-    console.log(data.metadata)
+    var sample = data.samples;
+    var person = sample.filter(subject => subject.id === "940");
+    console.log(person)
+
+    Object.entries(person).forEach(function([key,value]){
+        var datagr = Object.entries(value)
+        console.log(datagr[1]);
+        otuId = datagr[1][1];
+
+        });
 
 });
-
-// d3.json("././samples.json").then(function(data){
-//     var sample = data.samples;
-//     var person = sample.filter(subject => subject.id === "940");
-//     console.log(person)
-// });
