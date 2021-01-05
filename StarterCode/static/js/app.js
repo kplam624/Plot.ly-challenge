@@ -20,11 +20,35 @@ function buildMetadata(sample) {
 function buildCharts(sample) {
 
     // Read the json data
+    d3.json("././samples.json").then(function(data){
+        var samples = data.samples;
 
         // Parse and filter the data to get the sample's OTU data
-        // Pay attention to what data is required for each chart
-
+        var person = samples.filter(subject => subject.id === sample)[0];
+        console.log(person);
+        
+        var topTenSample = person.sample_values.slice(0,10);
+        var topTenLabel = person.otu_labels.slice(0,10);
+        var topTenID = person.otu_ids.slice(0,10);
+        var otuId = topTenID.map(i => "OTU " + i);
         // Create bar chart in correct location
+        trace = {
+                x: topTenSample.reverse(),
+                y: otuId.reverse(),
+                text : topTenLabel.reverse(),
+                type : "bar",
+                orientation: "h"
+            };
+        
+        data = [trace];
+        
+        layout = {
+        title: "Belly Button Data"
+        };
+    
+        Plotly.newPlot("bar",data,layout);
+        // Create bubble chart in correct location
+    });
 
         // Create bubble chart in correct location
     
@@ -51,7 +75,7 @@ function init() {
 
     // Use first sample to build metadata and initial plots
         var filteredMeta = meta.filter(subject => subject.id === 940);
-        
+
         Object.entries(filteredMeta).forEach(function([key,value]){
             Object.entries(value).forEach(function([key2,value2]){
                 var panel = panelBox.append("div").attr("id","sample-metadata").attr("class","panel-body");
@@ -59,6 +83,31 @@ function init() {
             });
             panelBox.select(".panel-body").remove();
         });     
+        var sample = data.samples;
+        var person = sample.filter(subject => subject.id === "940")[0];
+        console.log(person);
+        
+        var topTenSample = person.sample_values.slice(0,10);
+        var topTenLabel = person.otu_labels.slice(0,10);
+        var topTenID = person.otu_ids.slice(0,10);
+        var otuId = topTenID.map(i => "OTU " + i);
+
+        trace = {
+                x: topTenSample.reverse(),
+                y: otuId.reverse(),
+                text : topTenLabel.reverse(),
+                type : "bar",
+                orientation: "h"
+            };
+        
+        data = [trace];
+        
+        layout = {
+        title: "Belly Button Data"
+        };
+
+        Plotly.newPlot("bar",data,layout);
+        
     });
 };
 
@@ -83,37 +132,3 @@ init();
 // });
 
 // Time to make plots.
-
-d3.json("././samples.json").then(function(data){
-    var sample = data.samples;
-    var person = sample.filter(subject => subject.id === "940")[0];
-    console.log(person)
-
-
-    Object.entries(person).forEach(function([key,value]){
-        var datagr = Object.entries(value);
-        console.log(datagr);
-        
-        var sampleSort = datagr[2][1].sort(function(a,b){
-            console.log(b) 
-            return b - a});
-        console.log(sampleSort);
-        var topTen = sampleSort.slice(0,10);
-        console.log(topTen);
-        reverseTen = topTen.reverse()
-
-        // trace = {
-        //     x: reverseTen,
-        //     y: reverseTen.map(datagr => datagr.datagr[1][1]),
-        //     text : reverseTen.map(datagr => datagr.datagr[3][1]),
-        //     orientation: "h"
-        // };
-
-        // data = [trace];
-        // layout = {
-        //     title: "Dank"
-        // }
-        // Plotly.newPlot("bar",data,layout);
-        });
-
-});
