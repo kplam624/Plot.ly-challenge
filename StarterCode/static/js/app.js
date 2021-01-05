@@ -51,7 +51,7 @@ function init() {
 
     // Use first sample to build metadata and initial plots
         var filteredMeta = meta.filter(subject => subject.id === 940);
-
+        
         Object.entries(filteredMeta).forEach(function([key,value]){
             Object.entries(value).forEach(function([key2,value2]){
                 var panel = panelBox.append("div").attr("id","sample-metadata").attr("class","panel-body");
@@ -82,16 +82,38 @@ init();
 //     console.log(data.samples)
 // });
 
+// Time to make plots.
+
 d3.json("././samples.json").then(function(data){
     var sample = data.samples;
-    var person = sample.filter(subject => subject.id === "940");
+    var person = sample.filter(subject => subject.id === "940")[0];
     console.log(person)
 
-    Object.entries(person).forEach(function([key,value]){
-        var datagr = Object.entries(value)
-        console.log(datagr[1]);
-        otuId = datagr[1][1];
 
+    Object.entries(person).forEach(function([key,value]){
+        var datagr = Object.entries(value);
+        console.log(datagr);
+        
+        var sampleSort = datagr[2][1].sort(function(a,b){
+            console.log(b) 
+            return b - a});
+        console.log(sampleSort);
+        var topTen = sampleSort.slice(0,10);
+        console.log(topTen);
+        reverseTen = topTen.reverse()
+
+        // trace = {
+        //     x: reverseTen,
+        //     y: reverseTen.map(datagr => datagr.datagr[1][1]),
+        //     text : reverseTen.map(datagr => datagr.datagr[3][1]),
+        //     orientation: "h"
+        // };
+
+        // data = [trace];
+        // layout = {
+        //     title: "Dank"
+        // }
+        // Plotly.newPlot("bar",data,layout);
         });
 
 });
