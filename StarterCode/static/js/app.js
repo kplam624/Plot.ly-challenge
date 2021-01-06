@@ -1,6 +1,7 @@
 // Fill the panel with metadata information
 function buildMetadata(sample) {
-
+    var panelBox = d3.select(".panel-primary");
+    
     // Read the json data
     d3.json("././samples.json").then(function(data){
 
@@ -82,16 +83,23 @@ function init() {
                 panel.text(key2 + ":" + value2);
             });
             panelBox.select(".panel-body").remove();
-        });     
+        });  
+        
+        // Pull the data to create plots
         var sample = data.samples;
+
+        // Filter the plot to find id.
         var person = sample.filter(subject => subject.id === "940")[0];
         console.log(person);
         
+        // First plot will be the bar plot.
+        // Taking only the needed values for the plots
         var topTenSample = person.sample_values.slice(0,10);
         var topTenLabel = person.otu_labels.slice(0,10);
         var topTenID = person.otu_ids.slice(0,10);
         var otuId = topTenID.map(i => "OTU " + i);
 
+        // Creating the trace
         trace = {
                 x: topTenSample.reverse(),
                 y: otuId.reverse(),
@@ -100,19 +108,21 @@ function init() {
                 orientation: "h"
             };
         
+        // Creating the data for the plot
         data = [trace];
         
+        // Adding the layout
         layout = {
         title: "Belly Button Data"
         };
 
+        // Creating the plot where needed.
         Plotly.newPlot("bar",data,layout);
         
     });
 };
 
 function optionChanged(newSample){
-
     var panelBox = d3.select(".panel-primary");
     
     // Update metadata with newly selected sample
@@ -120,6 +130,7 @@ function optionChanged(newSample){
     buildMetadata(newSample)
     
     // Update charts with newly selected sample
+    buildCharts(newSample)
 
 }
 
