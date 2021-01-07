@@ -32,6 +32,7 @@ function buildCharts(sample) {
         var topTenLabel = person.otu_labels.slice(0,10);
         var topTenID = person.otu_ids.slice(0,10);
         var otuId = topTenID.map(i => "OTU " + i);
+        
         // Create bar chart in correct location
         trace = {
                 x: topTenSample.reverse(),
@@ -48,15 +49,16 @@ function buildCharts(sample) {
         };
     
         Plotly.newPlot("bar",data,layout);
+        
         // Create bubble chart in correct location
         trace2 = {
-            x: otuId.reverse(),
-            y: topTenSample.reverse(),
+            x: person.otu_ids,
+            y: person.sample_values,
             mode: "markers",
-            text: topTenLabel.reverse(),
+            text: person.otu_labels,
             marker : {
-                size: topTenSample.reverse(),
-                color: otuId.reverse(),
+                size: person.sample_values,
+                color: person.otu_ids,
             }
         }
 
@@ -65,7 +67,7 @@ function buildCharts(sample) {
         layout2 = {
             title: "Bubble Chart"
         };
-        
+
         Plotly.newPlot("bubble",data2,layout2);
     });
     
@@ -135,6 +137,25 @@ function init() {
         // Creating the plot where needed.
         Plotly.newPlot("bar",data,layout);
         
+        // Create bubble chart in correct location
+        trace2 = {
+            x: person.otu_ids,
+            y: person.sample_values,
+            mode: "markers",
+            text: person.otu_labels,
+            marker : {
+                size: person.sample_values,
+                color: person.otu_ids,
+            }
+        }
+
+        data2 = [trace2];
+
+        layout2 = {
+            title: "Bubble Chart"
+        };
+
+        Plotly.newPlot("bubble",data2,layout2);
     });
 };
 
