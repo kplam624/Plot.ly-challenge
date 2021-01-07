@@ -49,9 +49,18 @@ function buildCharts(sample) {
     
         Plotly.newPlot("bar",data,layout);
         // Create bubble chart in correct location
+        trace2 = {
+            x: otuId.reverse(),
+            y: topTenSample.reverse(),
+            mode: "markers",
+            text: topTenLabel.reverse(),
+            marker : {
+                size: topTenSample.reverse(),
+                color: otuId.reverse(),
+            }
+        }
+        Plotly.newPlot("bubble",data2,layout2);
     });
-
-        // Create bubble chart in correct location
     
 };
 
