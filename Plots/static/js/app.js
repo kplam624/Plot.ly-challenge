@@ -59,6 +59,13 @@ function buildCharts(sample) {
                 color: otuId.reverse(),
             }
         }
+
+        data2 = [trace2];
+
+        layout2 = {
+            title: "Bubble Chart"
+        };
+        
         Plotly.newPlot("bubble",data2,layout2);
     });
     
