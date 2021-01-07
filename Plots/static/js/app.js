@@ -91,10 +91,18 @@ function buildDropdown(){
 
 // Define function that will run on page load
 function init() {
-    
+    // Creates the the dropdown menu
     buildDropdown();
+
+    // Hard coding the first item as this is the item that will load first.
+    
+    // Builds the metadata
     buildMetadata("940");
+
+    // Builds the charts
     buildCharts("940");
+
+    // Cleans up the metadata chart.
     var panelBox = d3.select(".panel-primary");
     panelBox.select(".panel-body").remove();
 };
@@ -114,9 +122,3 @@ function optionChanged(newSample){
 // Initialize dashboard on page load
 init();
 
-// This shows the json files.
-// d3.json("././samples.json").then(function(data){
-//     console.log(data.samples)
-// });
-
-// Time to make plots.
