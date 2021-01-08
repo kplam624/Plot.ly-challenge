@@ -7,13 +7,16 @@ function buildMetadata(sample) {
 
         // Parse and filter the data to get the sample's metadata
         var meta = data.metadata;
-        var filteredMeta = meta.filter(subject => subject.id === parseInt(sample));
+
+        // Filter through the data to find the correct subject id.
+        var filteredMeta = meta.filter(subject => subject.id === parseInt(sample))[0];
+
+        // Using the key and values to create the metadata
         Object.entries(filteredMeta).forEach(function([key,value]){
-            Object.entries(value).forEach(function([key2,value2]){
+
                 // Specify the location of the metadata and update it
                 var panel = panelBox.append("div").attr("id","sample-metadata").attr("class","panel-body");
-                panel.text(key2 + ":" + value2);
-            });
+                panel.text(key + ":" + value);
         });
     });
 };
@@ -22,18 +25,24 @@ function buildCharts(sample) {
 
     // Read the json data
     d3.json("././samples.json").then(function(data){
+        
+        // Search for the samples json
         var samples = data.samples;
 
         // Parse and filter the data to get the sample's OTU data
         var person = samples.filter(subject => subject.id === sample)[0];
         console.log(person);
         
+        // Selecting the top ten values.
         var topTenSample = person.sample_values.slice(0,10);
         var topTenLabel = person.otu_labels.slice(0,10);
         var topTenID = person.otu_ids.slice(0,10);
+
+        // Fixing the ids
         var otuId = topTenID.map(i => "OTU " + i);
         
         // Create bar chart in correct location
+        // Creating the trace
         trace = {
                 x: topTenSample.reverse(),
                 y: otuId.reverse(),
@@ -42,15 +51,21 @@ function buildCharts(sample) {
                 orientation: "h"
             };
         
+        // Setting the data.
         data = [trace];
         
+        // Layout of the plot.
         layout = {
-        title: "Belly Button Data"
+        title : "Belly Button Data",
+        xaxis : {title: "Sample Values"},
+        yaxis : {title: "IDs"}
         };
     
+        // Creating the plot.
         Plotly.newPlot("bar",data,layout);
         
         // Create bubble chart in correct location
+        // Creating a trace
         trace2 = {
             x: person.otu_ids,
             y: person.sample_values,
@@ -62,18 +77,25 @@ function buildCharts(sample) {
             }
         }
 
+        // Create the data
         data2 = [trace2];
 
+        // Layout of the plot
         layout2 = {
-            title: "Bubble Chart"
+            title: "Bubble Chart",
+            xaxis: {title: "Sample Values"},
+            yaxis: {title: "IDs"}
         };
 
+        // Creating the plot
         Plotly.newPlot("bubble",data2,layout2);
     });
     
 };
 
+// Creating the dropdown menu
 function buildDropdown(){
+    
     // Read json data
     d3.json("././samples.json").then(function(data){
 
@@ -83,7 +105,11 @@ function buildDropdown(){
 
         // Add dropdown option for each sample
         var dropdown = d3.select("#selDataset");
+        
+        // Creating the dropdown menu with the value
         Object.entries(name).forEach(function([key,value]){
+
+            // Adding the menu option
             dropdown.append("option").text(value);
         });
     });
@@ -108,6 +134,7 @@ function init() {
 };
 
 function optionChanged(newSample){
+    // Selecting the panel.
     var panelBox = d3.select(".panel-primary");
     
     // Update metadata with newly selected sample
@@ -116,9 +143,7 @@ function optionChanged(newSample){
     
     // Update charts with newly selected sample
     buildCharts(newSample)
-
 }
 
 // Initialize dashboard on page load
 init();
-
