@@ -83,8 +83,8 @@ function buildCharts(sample) {
         // Layout of the plot
         layout2 = {
             title: "Bubble Chart",
-            xaxis: {title: "Sample Values"},
-            yaxis: {title: "IDs"}
+            xaxis: {title: "IDs"},
+            yaxis: {title: "Sample Values"}
         };
 
         // Creating the plot

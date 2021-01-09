@@ -12,6 +12,8 @@ This is a visualization of the different bacteria that can live in your belly bu
 
 * Plotly
 
+* HTML
+
 ## Purpose
 
 ---
@@ -25,6 +27,48 @@ The visualizations is a bar chart and a bubble chart based on the OTU ids and th
 ---
 
 The source code can be found in the static directory under js. The index.html is the homepage for the dashboard. The dataset is in a json format under samples.json.
+
+## Step 1: Metadata function
+
+---
+
+The first function to be created is the metadata.
+
+1. Use d3 to select the `panel-primary` id.
+
+2. Parse and filter through the json file to grab the metadata
+
+3. Create a filter for the metadata to find one person
+
+4. Using d3 append a `div` with a `panel-body` class.
+
+5. Place this append function within a `Object.entries().forEach({})` method to create the metadata.
+
+![metadata](Images/metadata.png)
+
+## Step 2: Bar Plot
+
+The bar plot uses the following:
+
+1. Use the `OTU-IDS` for the y-axis.
+
+2. Use the `Sample-values` for the x-axis.
+
+3. Use the `OTU-labels` for the hover text.
+
+![barplot](Images/barchart.png)
+
+## Step 3: Bubble Chart
+
+For the bubble chart
+
+1. The `OTU-IDs` are the x-axis
+
+2. The `Sample-Values` are the y-axis
+
+3. 
+
+![bubbleplot](Images/bubblechart.png)
 
 ## Sources
 
