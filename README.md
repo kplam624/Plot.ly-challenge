@@ -70,6 +70,9 @@ For the bubble chart
 
 ![bubbleplot](Images/bubblechart.png)
 
+## Deployment
+
+The webpage was deployed to github [pages](https://kplam624.github.io/Plot.ly-challenge/).
 ## Sources
 
 ---
