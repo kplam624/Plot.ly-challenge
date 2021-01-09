@@ -66,7 +66,7 @@ For the bubble chart
 
 2. The `Sample-Values` are the y-axis
 
-3. 
+3. The `OTU-Labels` are is the hovertext.
 
 ![bubbleplot](Images/bubblechart.png)
 
